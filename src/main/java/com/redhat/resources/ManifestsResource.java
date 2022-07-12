@@ -46,7 +46,6 @@ public class ManifestsResource {
             .inNamespace(namespace)
             .createOrReplace();   
             if(hasMetadata.size() > 0){
-                System.out.println("Metada size: "+ hasMetadata.size());
                 return Response.status(201).build();
             }else{
                 return Response.status(204).entity("File not found").build();
