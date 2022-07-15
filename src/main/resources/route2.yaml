@@ -1,0 +1,25 @@
+apiVersion: route.openshift.io/v1
+metadata:
+  name: replace-svc-company-name
+  namespace: replace-project
+  labels:
+    app: replace-svc
+    app.kubernetes.io/component: replace-svc
+    app.kubernetes.io/instance: replace-svc
+spec:
+  host: $SERVICE_NAME.teste.com.br
+  to:
+    kind: Service
+    name: replace-svc
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+    key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      -----END RSA PRIVATE KEY-----
+    insecureEdgeTerminationP
