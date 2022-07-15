@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: replace-svc
     app.kubernetes.io/instance: replace-svc
 spec:
-  host: $SERVICE_NAME.teste.com.br
+  host: replace-svc.teste.com.br
   to:
     kind: Service
     name: replace-svc
