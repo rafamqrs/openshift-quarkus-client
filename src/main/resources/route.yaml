@@ -1,0 +1,26 @@
+apiVersion: route.openshift.io/v1
+metadata:
+  name: $SERVICE_NAME-company-name
+  namespace: $PROJECT_NAME
+  labels:
+    app: $SERVICE_NAME
+    app.kubernetes.io/component: $SERVICE_NAME
+    app.kubernetes.io/instance: $SERVICE_NAME
+spec:
+  host: $SERVICE_NAME.teste.com.br
+  to:
+    kind: Service
+    name: $SERVICE_NAME
+    weight: 100
+  port:
+    targetPort: $TARGET_PORT_NAME
+  tls:
+    termination: edge
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+    key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      -----END RSA PRIVATE KEY-----
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
