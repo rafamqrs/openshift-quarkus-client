@@ -22,4 +22,5 @@ spec:
     key: |
       -----BEGIN RSA PRIVATE KEY-----
       -----END RSA PRIVATE KEY-----
-    insecureEdgeTerminationP
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
