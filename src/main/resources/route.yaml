@@ -1,13 +1,13 @@
 apiVersion: route.openshift.io/v1
 metadata:
-  name: $SERVICE_NAME-company-name
+  name: $SERVICE_NAME-hcaas
   namespace: $PROJECT_NAME
   labels:
     app: $SERVICE_NAME
     app.kubernetes.io/component: $SERVICE_NAME
     app.kubernetes.io/instance: $SERVICE_NAME
 spec:
-  host: $SERVICE_NAME.teste.com.br
+  host: $SERVICE_NAME.hcaas.cl.corp
   to:
     kind: Service
     name: $SERVICE_NAME

@@ -2,21 +2,46 @@ package com.redhat.model;
 
 public class Manifest {
 
+    private String appName;
+    private String projectName;
     private String url;
-    private String fileName;
+
 
     public Manifest(){
+        
     }
-
     /**
-     * @param url
-     * @param fileName
+     * @param appName
+     * @param projectName
      */
-    public Manifest(String url, String fileName) {
-        this.url = url;
-        this.fileName = fileName;
+    public Manifest(String appName, String projectName) {
+        this.appName = appName;
+        this.projectName = projectName;
     }
-
+    /**
+     * @return the appName
+     */
+    public String getAppName() {
+        return appName;
+    }
+    /**
+     * @param appName the appName to set
+     */
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+    /**
+     * @return the projectName
+     */
+    public String getProjectName() {
+        return projectName;
+    }
+    /**
+     * @param projectName the projectName to set
+     */
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
     /**
      * @return the url
      */
@@ -29,18 +54,5 @@ public class Manifest {
     public void setUrl(String url) {
         this.url = url;
     }
-    /**
-     * @return the fileName
-     */
-    public String getFileName() {
-        return fileName;
-    }
-    /**
-     * @param fileName the fileName to set
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-    
-    
+
 }
