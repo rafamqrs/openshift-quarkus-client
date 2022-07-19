@@ -76,7 +76,6 @@ public class ManifestsResource {
             String tlsCrt = new String(Base64.decode(secret.getData().get("tls.crt")), StandardCharsets.UTF_8);
             String keyCrt = new String(Base64.decode(secret.getData().get("tls.key")), StandardCharsets.UTF_8);
 
-
             //Set TLS
             TLSConfig config = new TLSConfig(null, tlsCrt, null, "None", keyCrt, "edge");
             spec.setTls(config);

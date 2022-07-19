@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: $SERVICE_NAME
     app.kubernetes.io/instance: $SERVICE_NAME
 spec:
-  host: $SERVICE_NAME.hcaas.cl.corp
+  host: $SERVICE_NAME-config-assistant-dev.apps.cluster-4db5.4db5.example.opentlc.com
   to:
     kind: Service
     name: $SERVICE_NAME
