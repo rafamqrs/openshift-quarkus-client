@@ -11,7 +11,6 @@ import io.fabric8.openshift.client.OpenShiftClient;
  */
 @Singleton
 public class OpenshiftClientProducer {
-
     
     @Produces
     public OpenShiftClient kubernetesClient() {
