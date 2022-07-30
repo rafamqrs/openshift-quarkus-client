@@ -32,6 +32,7 @@ import io.fabric8.openshift.api.model.RoutePort;
 import io.fabric8.openshift.api.model.RouteSpec;
 import io.fabric8.openshift.api.model.RouteTargetReference;
 import io.fabric8.openshift.api.model.TLSConfig;
+import main.java.com.redhat.model.Message;
 
 @Path("/manifest")
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,11 +47,18 @@ public class ManifestsResource {
     @ConfigProperty(name = "ROUTE_DOMAIN")
     private String domain;
 
-
     @GET
     @Path("/route/{namespace}")
-    public List<Route> routes(String namespace) {
-        return ocpClient.kubernetesClient().routes().inNamespace(namespace).list().getItems();
+    public Response routes(String namespace) {
+        try {
+            List<Route> routes = ocpClient.kubernetesClient().routes().inNamespace(namespace).list().getItems();
+            return Response.status(200).entity(routes).build();
+        } catch (KubernetesClientException e) {
+            return Response.status(500).entity(new Message(500, "An error has occurred " + e.getMessage() )).build();
+
+        } catch (Exception e) {
+            return Response.status(500).entity(new Message(500, "An error has occurred " + e.getMessage() )).build();
+        }
     }
 
     @POST
