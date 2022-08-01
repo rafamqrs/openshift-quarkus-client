@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -108,6 +109,23 @@ public class ManifestsResource {
             return Response.status(500).entity("An error has occured: " + e.getMessage()).build();
         }
     }
+
+/*     @Path("/route/{namespace}")
+    @PUT
+    public Response update(@PathParam("namespace") String namespace, Route route){
+        try {
+            if(ocpClient.kubernetesClient().routes().createOrReplace(route) != null){
+                return Response.status(201).build();
+            }else{
+                return Response.status(204).entity("File not found").build();
+            }         
+        } catch (IOException io) {
+            return Response.status(500).entity("An has occurred and the file could not be loaded "+ io.getMessage()).build();
+        } catch(KubernetesClientException ke){ 
+            return Response.status(422).entity("Could not create the route, cause:" + ke.getMessage()).build();
+        }
+    }
+ */
 
     @Path("/route/{namespace}/{id}")
     @DELETE

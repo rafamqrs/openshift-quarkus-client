@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: config-assistant-cm
+  labels:
+    {{- include "config-assistant-be-helm.labels" . | nindent 4 }}
+data:
+  ROUTE_HTTP_PORT:  "{{ .Values.configmap.routeHttpPort }}" 
+  ROUTE_DOMAIN: "{{ .Values.configmap.routeDomain }}"
