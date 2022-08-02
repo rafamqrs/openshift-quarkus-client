@@ -25,8 +25,6 @@ export default function RouteForm() {
     }
 
     function handleAlertError() {
-        console.log('setting error')
-        console.log(isError)
         setError(current => !current)
     }
 
@@ -39,7 +37,6 @@ export default function RouteForm() {
     
     const onSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        console.log('Saving....')
         httpCommons.post('/' + namespace, {
             "url": "https://raw.githubusercontent.com/rafamqrs/openshift-quarkus-client/main/src/main/resources/route.yaml",
             "fileName": "route.yaml",
