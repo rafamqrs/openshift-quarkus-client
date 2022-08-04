@@ -1,13 +1,8 @@
-FROM ubi8/nodejs-16:1-42 as build-step
-
-RUN mkdir /app
+FROM node:alpine
 WORKDIR /app
+COPY package.json ./
+COPY package-lock.json ./
+COPY ./ ./
+RUN npm i && npm install react-scripts
 
-COPY package.json /app
-RUN npm install
-COPY . /app
-
-RUN npm run build
-
-FROM ubi8/nginx-120:1-44
-COPY --from=build-step /app/build /usr/share/nginx/html
+CMD ["npm", "run", "start"]

@@ -42,11 +42,11 @@ public class ManifestsResource {
     
     @Inject
     private OpenshiftClientProducer ocpClient;
-    private String gitSource;
+    String gitSource;
     @ConfigProperty(name = "ROUTE_HTTP_PORT")
-    private String portNumber;
+    String portNumber;
     @ConfigProperty(name = "ROUTE_DOMAIN")
-    private String domain;
+    String domain;
 
     @GET
     @Path("/route/{namespace}")
@@ -101,42 +101,39 @@ public class ManifestsResource {
                 return Response.status(204).entity("File not found").build();
             }         
         } catch (IOException io) {
-            return Response.status(500).entity("An has occurred and the file could not be loaded "+ io.getMessage()).build();
+            return Response.status(500).entity(new Message(500, "An error has occurred " + io.getMessage() )).build();
         } catch(KubernetesClientException ke){ 
-            ke.printStackTrace();
-            return Response.status(422).entity("Could not create the route, cause:" + ke.getMessage()).build();
+            return Response.status(422).entity(new Message(500, "An error has occurred " + ke.getMessage() )).build();
         } catch (Exception e) {
-            return Response.status(500).entity("An error has occured: " + e.getMessage()).build();
+            return Response.status(500).entity(new Message(500, "An error has occurred " + e.getMessage() )).build();
         }
     }
 
-/*     @Path("/route/{namespace}")
+    @Path("/route/{namespace}")
     @PUT
     public Response update(@PathParam("namespace") String namespace, Route route){
         try {
+
             if(ocpClient.kubernetesClient().routes().createOrReplace(route) != null){
                 return Response.status(201).build();
             }else{
                 return Response.status(204).entity("File not found").build();
             }         
-        } catch (IOException io) {
-            return Response.status(500).entity("An has occurred and the file could not be loaded "+ io.getMessage()).build();
         } catch(KubernetesClientException ke){ 
-            return Response.status(422).entity("Could not create the route, cause:" + ke.getMessage()).build();
+            return Response.status(422).entity(new Message(500, "An error has occurred " + ke.getMessage() )).build();
         }
     }
- */
 
-    @Path("/route/{namespace}/{id}")
+    @Path("/route/{namespace}/{name}")
     @DELETE
-    public Response delete(@PathParam("namespace") String namespace, @PathParam("id") String id){
+    public Response delete(@PathParam("namespace") String namespace, @PathParam("name") String name){
         try {
-            ocpClient.kubernetesClient().routes().inNamespace(namespace).delete();
+            ocpClient.kubernetesClient().routes().inNamespace(namespace).withName(name).delete();
             return Response.ok().build();
         } catch(KubernetesClientException ke){ 
-            return Response.status(500).entity("An has occurred and the route could not be deleted "+ ke.getMessage()).build();
+            return Response.status(500).entity(new Message(500, "An has occurred and the route could not be deleted " + ke.getMessage() )).build();
         } catch (Exception e) {
-            return Response.status(500).entity("An has occurred and the route could not be deleted "+ e.getMessage()).build();
+            return Response.status(500).entity(new Message(500, "An has occurred and the route could not be deleted" + e.getMessage() )).build();
         }
     }
 }

@@ -28,6 +28,11 @@ export default function RouteForm() {
         setError(current => !current)
     }
 
+    function cleanForm(){
+        setAppName('')
+        setNamespace('')
+    }
+
     const timeout = 5000
     
     const [appName, setAppName] = useState('')
@@ -38,7 +43,7 @@ export default function RouteForm() {
     const onSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         httpCommons.post('/' + namespace, {
-            "url": "https://raw.githubusercontent.com/rafamqrs/openshift-quarkus-client/main/src/main/resources/route.yaml",
+            "url": "https://raw.githubusercontent.com/rafamqrs/openshift-quarkus-client/feature-delete-and-update/config-assistant-be/src/main/resources/route.yaml",
             "fileName": "route.yaml",
             "appName": appName
         })
@@ -46,6 +51,7 @@ export default function RouteForm() {
             setSuccess(false)
             handleAlert()
             setRoutes([])
+            cleanForm()
         })
         .catch((err) => {
             setError(false)
