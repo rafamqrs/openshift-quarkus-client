@@ -24,7 +24,6 @@ export default function RouteList() {
  */
 
     const searchByName = () => {
-        console.log('Searching for ....' + value    )
         httpCommons.get<Array<Route>>("/" + value).then((response) => {
             if(response.data.length > 0){
                 setValue('')
