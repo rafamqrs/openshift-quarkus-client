@@ -1,0 +1,100 @@
+image:
+  ## Name of the image you want to build/deploy
+  ## Defaults to the release name
+  name:
+  ## Tag that you want to build/deploy
+  tag: latest
+
+openshiftApplicationName: config-assistant
+
+replicaCount: 1
+
+
+build:
+  ## Should build-related resources such as BuildConfig and ImageStream be created?
+  ## Set this to false if you just want to deploy a previously built image.
+  enabled: true
+ 
+  ## Options: jvm or native
+  mode: jvm
+
+  ## Used if mode == 'jvm'
+  ## Creates an S2I build to produce a Quarkus Jar that runs in the JVM
+  jvm:
+    ## The ImageStreamTag of the desired builder image
+    imageStreamTag:
+      ## Name of the ImageStreamTag
+      name: openjdk-11:1.11
+      ## Is this ImageStreamTag in the same namespace you are releasing to?
+      useReleaseNamespace: false
+      ## Namespace containing the ImageStreamTag, is useReleaseNamespace == false
+#      namespace: openshift
+    git:
+      url: https://github.com/rafamqrs/openshift-quarkus-client
+      ref: feature-delete-and-update
+      contextDir: config-assistant-be
+  output:
+    ## Choices: ImageStreamTag, DockerImage
+    ## ImageStreamTag publishes to the internal registry
+    ## DockerImage publishes to an external registry (referred to by image.name and image.tag)
+    kind: ImageStreamTag
+    ## Push secret name, used only if kind == "DockerImage"
+    pushSecret:
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "config-assistant"
+
+service:
+  type: ClusterIP
+  port: 8080
+  name: http
+  protocol: TCP
+  targetPort: 8080
+
+#ingress:
+#  enabled: false
+#  annotations: {}
+#    # kubernetes.io/ingress.class: nginx
+#    # kubernetes.io/tls-acme: "true"
+#  hosts:
+#    - host: chart-example.local
+#      paths: []
+#  tls: []
+#  #  - secretName: chart-example-tls
+#  #    hosts:
+#  #      - chart-example.local
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+configmap:
+  routeHttpPort: 8080
+  routeDomain: -config-assistant-dev.apps.cluster-lb0eba.lb0eba.example.opentlc.com
+
+
+container:
+  image: image-registry.openshift-image-registry.svc:5000/config-assistant-dev/config-assistant-be
+
+#autoscaling:
+#  enabled: false
+#  minReplicas: 1
+#  maxReplicas: 100
+#  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+#nodeSelector: {}
+
+#tolerations: []
+
+#affinity: {}
